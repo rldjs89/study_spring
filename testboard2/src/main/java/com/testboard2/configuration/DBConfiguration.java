@@ -2,12 +2,9 @@ package com.testboard2.configuration;
 
 import javax.sql.DataSource;
 
-import org.apache.catalina.core.ApplicationContext;
-import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,8 +20,8 @@ import com.zaxxer.hikari.HikariDataSource;
 @PropertySource("classpath:/application.properties")
 public class DBConfiguration {
 
-    @Autowired
-    private ApplicationContext applicationContext;
+    // @Autowired
+    // private ApplicationContext applicationContext;
 
     /* Hikari 설정1
      * @Bean : return 되는 객체를 IoC컨테이너에 등록
@@ -68,11 +65,11 @@ public class DBConfiguration {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource);
         
+        //아래 이거는 다시 확인해봐야함!!!!!!!!!!!!!!*************
         //factoryBean.setMapperLocations(applicationContext.getResource("classpath:/mapper/**/*Mapper.xml"));
         factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:/mapper/**/*Mapper.xml"));
 
-        /*
-         * mapper에 대한 리소스는 어디서 가져오지?
+        /* mapper에 대한 리소스는 어디서 가져오지?
          * --ApplicationContext 객체에서 가져올 수 있다.
          * --ApplicationContext는 쉽게말해 framework container 라고 생각하면 됨.
          * --ApplicationContext는 애플리케이션이 스타트해서 끝나는 순간까지 애플리케이션에서 필요한 모든 자원들을 모아놓고 관리.
